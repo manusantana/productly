@@ -1,0 +1,28 @@
+<!--Extendemos el contenido del archivo base.html-->
+{% extends 'base.html' %}
+
+{% block content %} 
+<!--la web que queremos renderizar es la de formulario que está en productos-->
+<form 
+    novalidate 
+    action="{% url 'productos:formulario' %}" 
+    method='post'> <!--novalidate quita advertencias del navegador-->
+    {% csrf_token %} <!--Esto es por seguridad. Genera un token por segurdad-->
+    {% for field in form %}
+    <div>
+        {{ field.label_tag }}  <!-- Muestra el nombre del campo -->
+        {{ field }}  <!-- Renderiza el input del campo -->
+        
+        {% if field.errors %}  <!-- Si hay errores, los mostramos -->
+            <div style="color: red;">
+                {% for error in field.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <input type="submit" value="Enviar"/>
+</form>
+{% endblock %}

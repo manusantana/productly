@@ -1,0 +1,16 @@
+<!--No hay que extender de base.html, sino que es para que Django vaya renderizando cada campos.
+itera todos los campos.Son una especie de lista que se irá iterando cada campo del formulario-->
+{% load add_attr %} <!-- Aquí añadimos la carga de poder añadir filtros creados por nosotros-->
+{% for field in form %} <!--Iteramos los campos en formulario-->
+<div class="mb-3">    
+    {{field.label_tag}} <!--{{ field }} <!-esta etiqueta de label_tag es la que se va imprimir y la que aparece en cada campo-->
+    {% if field.errors%} <!--Aqui vamos a añadir un if para cuando el usuario cometa errores al introducir datos -->
+        {{ field|add_attr: "class:is-invalid" }}
+    {% else %}
+        {{ field }}
+    <div class="invalid-feedback">   
+    {% for error in field.errors %}<!--Para iterar los errores usamos otro for dentro-->
+        {{ error }}
+    {% endfor %}
+</div>        
+{% endfor %}

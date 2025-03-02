@@ -1,0 +1,30 @@
+{% extends 'base.html' %} <!--Esto hace que se traiga el archivo base.html-->
+{% block content %}
+<h1>Productos</h1>
+<a href=" {% url 'productos:formulario' %}">Nuevo Producto</a>
+<table class="table">
+    <thead>
+        <th>Nombre</th>
+        <th>Stock</th>
+        <th>Puntuación</th>
+        <th>Categoría</th>
+    </thead>
+
+
+    <tbody>
+        {% for producto in productos %} <!--esta es la forma de llamar la BBDD iterando en Django -->
+        <tr>
+            <td>
+                <a href="{% url 'productos:detalle' producto.id %}">
+                    <!--Ponemos url + nombre queremos sea link importante '' y luego a donde va a ir el link, en este caso la url con el id-->
+                    {{ producto.nombre }}
+                </a>
+            </td>
+            <td>{{ producto.stock }}</td>
+            <td>{{ producto.puntuacion }}</td>
+            <td>{{ producto.categoria }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

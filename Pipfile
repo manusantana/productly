@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+asgiref = "==3.8.1"
+certifi = "==2024.8.30"
+sqlparse = "==0.5.3"
+twilio = "*"
+sendgrid = "*"
+requests = "*"
+openpyxl = "*"
+selenium = "*"
+django = "==4.1.7"
+pylint-django = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.13"
