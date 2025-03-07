@@ -20,14 +20,14 @@ jobs:
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_rsa_new
           
-          # Evitar confirmaciones de host SSH
-          echo "Host github.com" >> ~/.ssh/config
+          # Configurar SSH para usar la clave correcta
+          echo "Host ${{ secrets.SSH_HOST }}" >> ~/.ssh/config
           echo "  IdentityFile ~/.ssh/id_rsa_new" >> ~/.ssh/config
-          echo "  User git" >> ~/.ssh/config
+          echo "  User ${{ secrets.SSH_USER }}" >> ~/.ssh/config
           echo "  StrictHostKeyChecking no" >> ~/.ssh/config
 
       - name: Verificar conexión SSH
-        run: ssh -T git@github.com || true
+        run: ssh -i ~/.ssh/id_rsa_new -T ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} || true
 
       - name: Desplegar en VPS
         uses: appleboy/ssh-action@master
