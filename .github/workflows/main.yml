@@ -15,10 +15,13 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          
+          # Iniciar el agente SSH y agregar la clave
+          eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_rsa
-
-      - name: Verificar conexión SSH
-        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo '✅ Conexión SSH exitosa'"
+          
+          # Evitar confirmaciones al conectarse por SSH
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
 
       - name: Desplegar en VPS
         uses: appleboy/ssh-action@master
