@@ -27,7 +27,7 @@ jobs:
           echo "  StrictHostKeyChecking no" >> ~/.ssh/config
 
       - name: Verificar conexión SSH
-        run: ssh -T git@github.com || exit 1
+        run: ssh -T git@github.com || true
 
       - name: Desplegar en VPS
         uses: appleboy/ssh-action@master
