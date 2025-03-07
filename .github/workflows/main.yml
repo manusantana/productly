@@ -6,11 +6,21 @@ on:
       - main
 
 jobs:
-  build:
-    name: Build
+  deploy:
+    name: Deploy en VPS
     runs-on: ubuntu-latest
     steps:
-      - name: Pull código en VPS
+      - name: Configurar clave SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-add ~/.ssh/id_rsa
+
+      - name: Verificar conexión SSH
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo '✅ Conexión SSH exitosa'"
+
+      - name: Desplegar en VPS
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
